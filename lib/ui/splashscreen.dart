@@ -1,29 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:sub2/data/model/restaurant.dart';
-import 'package:sub2/ui/home.dart';
-import 'package:sub2/ui/restaurant_detail.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Resto App Jaya',
-      initialRoute: Home.routeName,
-      routes: {
-        Home.routeName: (context) => Home(),
-        RestaurantDetail.routeName: (context) => RestaurantDetail(
-              restaurant:
-                  ModalRoute.of(context)?.settings.arguments as Restaurant,
-            ),
-      },
-    );
-  }
-}
+// import 'package:flutter/material.dart';
+// import 'package:sub2/main.dart';
 
 // class SplashScreen extends StatelessWidget {
 //   const SplashScreen({Key? key}) : super(key: key);
