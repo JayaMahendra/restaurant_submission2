@@ -39,71 +39,111 @@ class DetailPage extends StatelessWidget {
                   title: Text('Detail'), backgroundColor: Color(0xFFFF1744)),
               body: SingleChildScrollView(
                   child: Container(
-                      padding: EdgeInsets.all(40),
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Image.network(
-                                'https://restaurant-api.dicoding.dev/images/medium/' +
-                                    restaurantDetail.pictureId),
-                            Padding(padding: EdgeInsets.all(20)),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(restaurantDetail.name,
-                                    style: TextStyle(
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.bold)),
-                                Text(
-                                  restaurantDetail.rating.toString(),
-                                  style: TextStyle(
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.bold,
+                padding: EdgeInsets.all(40),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Image.network(
+                        'https://restaurant-api.dicoding.dev/images/medium/' +
+                            restaurantDetail.pictureId),
+                    Padding(padding: EdgeInsets.all(20)),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(restaurantDetail.name,
+                            style: TextStyle(
+                                fontSize: 25, fontWeight: FontWeight.bold)),
+                        Text(
+                          restaurantDetail.rating.toString(),
+                          style: TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        )
+                      ],
+                    ),
+                    Text(
+                      restaurantDetail.city,
+                      style: TextStyle(fontSize: 15),
+                    ),
+                    Text(
+                      restaurantDetail.address,
+                      style: TextStyle(fontSize: 15),
+                    ),
+                    Padding(padding: EdgeInsets.all(10)),
+                    Text('Deskripsi: ',style: TextStyle(fontWeight: FontWeight.bold)),
+                    Padding(padding: EdgeInsets.all(5)),
+                    Text(restaurantDetail.description),
+                    Padding(padding: EdgeInsets.all(10)),
+                    Text('Menu: ',style: TextStyle(fontWeight: FontWeight.bold)),
+                    Padding(padding: EdgeInsets.all(5)),
+                    Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Expanded(
+                            child: ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: restaurantDetail.menus.foods.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return Text('- ' +
+                                      restaurantDetail.menus.foods[index].name);
+                                }),
+                          ),
+                          Expanded(
+                            child: ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: restaurantDetail.menus.drinks.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return Text('- ' +
+                                      restaurantDetail
+                                          .menus.drinks[index].name);
+                                }),
+                          ),
+                          
+                        ]),
+                    Column(
+                      children: [
+                        Padding(padding: EdgeInsets.only(top: 15)),
+                        Text(
+                            'Customer Review', style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          Padding(padding: EdgeInsets.all(8)),
+                        ListView.builder(
+                            shrinkWrap: true,
+                            physics: ScrollPhysics(),
+                            itemCount: restaurantDetail.customerReviews.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Name: ' +
+                                        restaurantDetail
+                                            .customerReviews[index].name,
                                   ),
-                                )
-                              ],
-                            ),
-                            Text(
-                              restaurantDetail.city,
-                              style: TextStyle(fontSize: 15),
-                            ),
-                            Padding(padding: EdgeInsets.all(10)),
-                            Text('Deskripsi: '),
-                            Padding(padding: EdgeInsets.all(5)),
-                            Text(restaurantDetail.description),
-                            Padding(padding: EdgeInsets.all(10)),
-                            Text('Menu: '),
-                            Padding(padding: EdgeInsets.all(5)),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Expanded(
-                                  child: ListView.builder(
-                                      shrinkWrap: true,
-                                      itemCount:
-                                          restaurantDetail.menus.foods.length,
-                                      itemBuilder:
-                                          (BuildContext context, int index) {
-                                        return Text('- ' +
-                                            restaurantDetail
-                                                .menus.foods[index].name);
-                                      }),
-                                ),
-                                Expanded(
-                                  child: ListView.builder(
-                                      shrinkWrap: true,
-                                      itemCount:
-                                          restaurantDetail.menus.drinks.length,
-                                      itemBuilder:
-                                          (BuildContext context, int index) {
-                                        return Text('- ' +
-                                            restaurantDetail
-                                                .menus.drinks[index].name);
-                                      }),
-                                ),
-                              ],
-                            )
-                          ]))));
+                                  Text(
+                                    'Date: ' +
+                                        restaurantDetail
+                                            .customerReviews[index].date,
+                                  ),
+                                  Text(
+                                    'Review: ' +
+                                        restaurantDetail
+                                            .customerReviews[index].review,
+                                  ),
+                                  const Divider(
+                                      thickness: 0.1,
+                                      indent: 20,
+                                      endIndent: 50,
+                                      color: Colors.green),
+                                ],
+                              );
+                            }),
+                      ],
+                    )
+                  ],
+                ),
+              )));
         } else if (state.state == ResultState.NoData) {
           return Center(child: Text(state.message));
         } else if (state.state == ResultState.Error) {
