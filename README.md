@@ -1,6 +1,13 @@
 # sub2
 
-A new Flutter project.
+Tugas Submission 2 DIcoding - Flutter Fundamental
+menggunakan provider, api 
+
+![sub2](https://user-images.githubusercontent.com/64392550/132100947-d03a8b27-3d5c-4827-83c6-3daa283af6e0.jpg)
+
+![sub22](https://user-images.githubusercontent.com/64392550/132100972-626dc9dd-3ad4-4a73-a3e1-87ff40fdb849.jpg)
+
+![3](https://user-images.githubusercontent.com/64392550/132100987-0dd90510-60e4-491a-800e-6451a4f0efb8.jpg)
 
 ## Getting Started
 
