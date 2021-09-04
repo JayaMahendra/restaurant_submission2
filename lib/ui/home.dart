@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sub2/data/api/api_service_restaurant.dart';
 import 'package:sub2/provider/restaurant_provider.dart';
+import 'package:sub2/ui/search/resto_search.dart';
 import 'package:sub2/widgets/card_restaurant.dart';
 import 'package:sub2/widgets/platforms_widget.dart';
 
@@ -26,6 +27,8 @@ class _Home extends State<Home> {
 }
 
 class DataRestaurant extends StatelessWidget {
+  TextEditingController searchController = new TextEditingController();
+  String nameResto = 'namaRestaurant';
   Widget _buildList() {
     return Consumer<ListProvider>(
       builder: (context, state, _) {
@@ -36,7 +39,7 @@ class DataRestaurant extends StatelessWidget {
               padding: EdgeInsets.only(top: 60, left: 20),
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  children: <Widget>[
                     Text(
                       'Hello,',
                       style:
@@ -44,9 +47,37 @@ class DataRestaurant extends StatelessWidget {
                     ),
                     Text('What you want eat today?',
                         style: TextStyle(fontSize: 20)),
+                    Container(
+                       padding: EdgeInsets.only(top: 20, left: 20, right: 40),
+                      child: TextField(
+                          controller: searchController,
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
+                            labelText: 'Find a Restaurant...',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                          )),
+                    ),
+                    IconButton(
+                        onPressed: () {
+                          nameResto = searchController.text;
+                          Navigator.pushNamed(
+                            context,
+                            RestaurantSearchPage.routeName,
+                            arguments: nameResto,
+                          );
+                        },
+                        icon: const Icon(Icons.search)),
+                       
                     Expanded(
                       child: Column(
                         children: <Widget>[
+                           Container(
+                          padding: EdgeInsets.only(top: 20),
+                          child: Text('* List Restaurant * ',
+                          style: TextStyle(fontSize: 20)),
+                        ),
                           Row(
                             children: [
                               Expanded(

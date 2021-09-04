@@ -1,33 +1,34 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sub2/data/api/api_service_detail.dart';
-import 'package:sub2/data/model/restaurant.dart';
-import 'package:sub2/provider/detail_provider.dart';
+import 'package:sub2/data/api/api_service_search_detail.dart';
+import 'package:sub2/data/model/restaurant_search.dart';
+import 'package:sub2/provider/search_detail_provider.dart';
 import 'package:sub2/widgets/platforms_widget.dart';
 
-class RestaurantDetail extends StatelessWidget {
-  static const routeName = '/resto_detail';
+class RestaurantDetailSearchPage extends StatelessWidget {
+  static const routeName = '/search_resto_detail';
 
-  final Restaurant restaurant;
+  final RestaurantSearch restaurant;
 
-  const RestaurantDetail({required this.restaurant});
+  const RestaurantDetailSearchPage({required this.restaurant});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ChangeNotifierProvider<DetailProvider>(
-        create: (_) => DetailProvider(
-            apiServiceDetail: ApiServiceDetail(idDetail: restaurant.id)),
-        child: DetailPage(),
+      body: ChangeNotifierProvider<DetailProviderSearch>(
+        create: (_) => DetailProviderSearch(
+            apiServiceDetailSearch:
+                ApiServiceDetailSearch(idDetail: restaurant.id)),
+        child: DetailPageSearch(),
       ),
     );
   }
 }
 
-class DetailPage extends StatelessWidget {
+class DetailPageSearch extends StatelessWidget {
   Widget _buildList() {
-    return Consumer<DetailProvider>(
+    return Consumer<DetailProviderSearch>(
       builder: (context, state, _) {
         if (state.state == ResultState.Loading) {
           return Center(child: CircularProgressIndicator());
