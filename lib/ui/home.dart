@@ -75,8 +75,6 @@ class DataRestaurant extends StatelessWidget {
                         children: <Widget>[
                            Container(
                           padding: EdgeInsets.only(top: 20),
-                          child: Text('* List Restaurant * ',
-                          style: TextStyle(fontSize: 20)),
                         ),
                           Row(
                             children: [

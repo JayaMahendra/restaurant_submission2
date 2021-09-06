@@ -30,7 +30,7 @@ class DetailProvider extends ChangeNotifier {
       if (restaurant.restaurant == null) {
         _state = ResultState.NoData;
         notifyListeners();
-        return _message = 'Empty Data';
+        return _message = 'Hasil pencarian tidak ditemukan';
       } else {
         _state = ResultState.HasData;
         notifyListeners();
@@ -40,7 +40,7 @@ class DetailProvider extends ChangeNotifier {
       _state = ResultState.Error;
       notifyListeners();
       return _message =
-          'TERJADI KESALAHAN, SILAHKAN PERIKSA KONEKSI INTERNET ANDA \n\nDetail: \nError --> $e';
+          'Terjadi kesalahan, cek koneksi internet anda';
     }
   }
 }
