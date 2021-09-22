@@ -4,11 +4,14 @@ import 'package:provider/provider.dart';
 import 'package:sub2/data/api/api_service_restaurant.dart';
 import 'package:sub2/provider/restaurant_provider.dart';
 import 'package:sub2/ui/search/resto_search.dart';
-import 'package:sub2/widgets/card_restaurant.dart';
+import 'package:sub2/ui/card_restaurant.dart';
 import 'package:sub2/widgets/platforms_widget.dart';
 
 class Home extends StatefulWidget {
+  int _selectedIndex = 0;
+
   static const routeName = '/home_page';
+  static const String HomeTitle = 'Resto App';
 
   @override
   _Home createState() => _Home();
@@ -48,7 +51,7 @@ class DataRestaurant extends StatelessWidget {
                     Text('What you want eat today?',
                         style: TextStyle(fontSize: 20)),
                     Container(
-                       padding: EdgeInsets.only(top: 20, left: 20, right: 40),
+                      padding: EdgeInsets.only(top: 20, left: 20, right: 40),
                       child: TextField(
                           controller: searchController,
                           keyboardType: TextInputType.text,
@@ -69,13 +72,12 @@ class DataRestaurant extends StatelessWidget {
                           );
                         },
                         icon: const Icon(Icons.search)),
-                       
                     Expanded(
                       child: Column(
                         children: <Widget>[
-                           Container(
-                          padding: EdgeInsets.only(top: 20),
-                        ),
+                          Container(
+                            padding: EdgeInsets.only(top: 20),
+                          ),
                           Row(
                             children: [
                               Expanded(

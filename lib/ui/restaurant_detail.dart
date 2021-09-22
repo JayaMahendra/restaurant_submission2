@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sqflite/sqflite.dart';
 import 'package:sub2/data/api/api_service_detail.dart';
+import 'package:sub2/data/model/favourite.dart';
 import 'package:sub2/data/model/restaurant.dart';
 import 'package:sub2/provider/detail_provider.dart';
 import 'package:sub2/widgets/platforms_widget.dart';
+import 'package:sub2/data/database/db_helper.dart';
 
 class RestaurantDetail extends StatelessWidget {
   static const routeName = '/resto_detail';
@@ -25,7 +28,20 @@ class RestaurantDetail extends StatelessWidget {
   }
 }
 
-class DetailPage extends StatelessWidget {
+class DetailPage extends StatefulWidget {
+  @override
+  _DetailPageState createState() => _DetailPageState();
+}
+
+class _DetailPageState extends State<DetailPage> {
+  int count = 0;
+
+  DbHelper dbHelper = DbHelper();
+
+  late List<Favorite> itemList;
+
+  late final Favorite favorite;
+
   Widget _buildList() {
     return Consumer<DetailProvider>(
       builder: (context, state, _) {
@@ -62,9 +78,38 @@ class DetailPage extends StatelessWidget {
                         )
                       ],
                     ),
-                    Text(
-                      restaurantDetail.city,
-                      style: TextStyle(fontSize: 15),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          restaurantDetail.city,
+                          style: TextStyle(fontSize: 15),
+                        ),
+                        IconButton(
+                          // isSaved ? Icons.favorite : Icons.favorite_border,
+                          // color: isSaved ? Colors.red : null,
+                          icon: Icon(
+                            Icons.favorite,
+                            color: Colors.red,
+                          ),
+                          onPressed: () async {
+                            favorite = Favorite(
+                              idFavorite: restaurantDetail.id,
+                              name: restaurantDetail.name,
+                              desc: restaurantDetail.description,
+                              urlImage: restaurantDetail.pictureId,
+                              city: restaurantDetail.city,
+                              rating: restaurantDetail.rating.toString(),
+                              foods: restaurantDetail.menus.foods[0].name,
+                              drinks: restaurantDetail.menus.drinks[0].name,
+                            );
+                            int result = await dbHelper.insert(favorite);
+                            if (result > 0) {
+                              updateListView();
+                            }
+                          },
+                        ),
+                      ],
                     ),
                     Text(
                       restaurantDetail.address,
@@ -179,5 +224,18 @@ class DetailPage extends StatelessWidget {
       androidBuilder: _buildAndroid,
       iosBuilder: _buildIos,
     );
+  }
+
+  void updateListView() {
+    final Future<Database> dbFuture = dbHelper.initDb();
+    dbFuture.then((database) {
+      Future<List<Favorite>> itemListFuture = dbHelper.getFavoriteList();
+      itemListFuture.then((itemList) {
+        setState(() {
+          this.itemList = itemList;
+          this.count = itemList.length;
+        });
+      });
+    });
   }
 }
